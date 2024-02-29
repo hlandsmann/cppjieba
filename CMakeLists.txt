@@ -1,28 +1,28 @@
-PROJECT(CPPJIEBA)
+add_library(cppjieba INTERFACE)
+add_library(cppjieba::cppjieba ALIAS cppjieba)
+target_sources(cppjieba
+    PRIVATE
+        include/cppjieba/DictTrie.hpp
+        include/cppjieba/FullSegment.hpp
+        include/cppjieba/HMMModel.hpp
+        include/cppjieba/HMMSegment.hpp
+        include/cppjieba/Jieba.hpp
+        include/cppjieba/KeywordExtractor.hpp
+        include/cppjieba/MPSegment.hpp
+        include/cppjieba/MixSegment.hpp
+        include/cppjieba/PosTagger.hpp
+        include/cppjieba/PreFilter.hpp
+        include/cppjieba/QuerySegment.hpp
+        include/cppjieba/SegmentBase.hpp
+        include/cppjieba/SegmentTagged.hpp
+        include/cppjieba/TextRankExtractor.hpp
+        include/cppjieba/Trie.hpp
+        include/cppjieba/Unicode.hpp
+)
 
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+target_link_libraries(cppjieba
+    INTERFACE
+        limonp::limonp
+)
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/deps/limonp/include
-  ${PROJECT_SOURCE_DIR}/include)
-
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set (CMAKE_INSTALL_PREFIX "/usr/local/cppjieba" CACHE PATH "default install path" FORCE )
-endif()
-
-ADD_DEFINITIONS(-O3 -Wall -g)
-IF(APPLE) # mac os
-    ADD_DEFINITIONS(-std=c++0x)
-endif()
-
-# cmake .. -DENC=GBK
-# IF (DEFINED ENC)
-#     ADD_DEFINITIONS(-DCPPJIEBA_${ENC})
-# ENDIF()
-
-ADD_SUBDIRECTORY(deps)
-ADD_SUBDIRECTORY(test)
-
-ENABLE_TESTING()
-ADD_TEST(NAME ./test/test.run COMMAND ./test/test.run)
-ADD_TEST(NAME ./load_test COMMAND ./load_test)
-ADD_TEST(NAME ./demo COMMAND ./demo)
+ADD_SUBDIRECTORY(deps/limonp)
