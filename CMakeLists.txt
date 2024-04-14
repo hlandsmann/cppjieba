@@ -24,5 +24,10 @@ target_link_libraries(cppjieba
     INTERFACE
         limonp::limonp
 )
+target_include_directories(cppjieba
+    INTERFACE
+        include
+)
 
 ADD_SUBDIRECTORY(deps/limonp)
+add_subdirectory(test)
